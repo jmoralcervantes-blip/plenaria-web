@@ -1,23 +1,17 @@
 # Plenaria · web comercial
 
 Página estática (HTML y CSS, sin compilación) para presentar Plenaria y recibir solicitudes de demo.
+Publicada en Netlify: https://plenaria-congresos.netlify.app
 
-## Antes de publicar
+## Formulario de demo
 
-1. En `index.html`, cambia `CONTACT_EMAIL` (al final del archivo) por el correo que recibirá las solicitudes.
-2. En `aviso-legal.html` y `privacidad.html`, completa lo marcado entre corchetes: titular, NIF, domicilio, correo y fecha.
+Usa Netlify Forms (gratis hasta 100 solicitudes al mes). Las solicitudes aparecen en Netlify › proyecto
+plenaria-congresos › Forms › demo. Para recibirlas por email: Forms › Form notifications › Add notification › Email.
 
-## Publicar gratis en Cloudflare Pages
+## Antes de anunciarla
 
-1. Crea una cuenta en cloudflare.com (plan gratuito).
-2. Workers & Pages › Crear › Pages › Conectar con Git › elige el repositorio `plenaria-web`.
-3. Configuración de compilación: *Framework* «Ninguno», comando de compilación vacío, directorio de salida `/`.
-4. Guardar y desplegar. Quedará en `plenaria-web.pages.dev`; cada cambio en GitHub se publica solo.
+En `aviso-legal.html` y `privacidad.html`, completa lo marcado entre corchetes: titular, NIF, domicilio, correo y fecha.
 
 ## Dominio propio
 
-1. Compra el dominio (por ejemplo, en el propio Cloudflare Registrar, a precio de coste).
-2. En el proyecto de Pages › Dominios personalizados › añade el dominio.
-3. Correo con tu dominio sin pagar buzón: Email › Email Routing › reenvía `hola@tudominio` a tu Gmail.
-
-El archivo `_headers` añade cabeceras de seguridad que Cloudflare Pages aplica automáticamente.
+En Netlify › Domain management › Add a domain. El dominio se puede comprar allí mismo o en cualquier registrador.
