@@ -186,6 +186,9 @@ input,select,textarea{font:inherit;font-size:16px;font-weight:400;color:var(--in
 textarea{min-height:96px;resize:vertical}
 .form-note{font-size:13px;color:var(--ink-2);margin:0}
 .form-error{font-size:14px;color:var(--red);margin:0}
+.form-ok{text-align:center;padding:40px 12px}
+.form-ok h3{font-size:24px;margin:0 0 8px;letter-spacing:-.02em}
+.form-ok p{margin:0;color:var(--ink-2)}
 @media (max-width:900px){.demo-box{grid-template-columns:1fr;padding:28px;gap:28px}.row2{grid-template-columns:1fr}}
 
 /* Preguntas */
@@ -411,7 +414,10 @@ footer a{color:var(--ink-2)}
         <p class="intro">En una videollamada de media hora recorremos un congreso completo, de las inscripciones a los diplomas, y vemos cómo encajaría el vuestro.</p>
         <p class="intro">Estamos en fase de lanzamiento: configuramos personalmente cada congreso con quien organiza.</p>
       </div>
-      <form class="req" id="demo-form" novalidate>
+      <form class="req" id="demo-form" name="demo" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="demo">
+        <input type="hidden" name="subject" value="Solicitud de demo de Plenaria">
+        <p hidden><label>No rellenes este campo <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
         <div class="row2">
           <label>Nombre<input name="nombre" autocomplete="name" required maxlength="80"></label>
           <label>Email<input name="email" type="email" autocomplete="email" required maxlength="254"></label>
@@ -428,7 +434,7 @@ footer a{color:var(--ink-2)}
         <label><span>¿Qué os gustaría ver? <span style="font-weight:400;color:var(--ink-2)">(opcional)</span></span><textarea name="mensaje" maxlength="1000"></textarea></label>
         <p class="form-error" id="form-error" role="alert"></p>
         <button class="btn blue" type="submit">Pedir la demo</button>
-        <p class="form-note">Al pulsar se abre tu programa de correo con la solicitud ya escrita. Solo usaremos estos datos para responderte.</p>
+        <p class="form-note">Solo usaremos estos datos para responderte. <a href="privacidad.html">Política de privacidad</a>.</p>
       </form>
     </div>
   </div>
@@ -455,30 +461,29 @@ footer a{color:var(--ink-2)}
 </footer>
 
 <script>
-  // Correo que recibe las solicitudes de demo. Cámbialo por el tuyo antes de publicar.
-  const CONTACT_EMAIL = "hola@plenaria.es";
-
   document.getElementById("year").textContent = new Date().getFullYear();
   const form = document.getElementById("demo-form");
   const err = document.getElementById("form-error");
+  const button = form.querySelector('button[type="submit"]');
   const clean = (v) => String(v || "").replace(/[<>]/g, "").replace(/\s+/g, " ").trim();
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const d = Object.fromEntries(new FormData(form));
-    const nombre = clean(d.nombre), email = clean(d.email), org = clean(d.organizacion);
+    const data = new FormData(form);
+    const nombre = clean(data.get("nombre")), email = clean(data.get("email")), org = clean(data.get("organizacion"));
     if (!nombre || !org) { err.textContent = "Escribe tu nombre y la organización."; return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { err.textContent = "Revisa el email: así no podremos responderte."; return; }
     err.textContent = "";
-    const body = [
-      "Nombre: " + nombre,
-      "Email: " + email,
-      "Organización: " + org,
-      "Fecha prevista: " + (clean(d.fecha) || "sin decidir"),
-      "Asistentes previstos: " + clean(d.asistentes),
-      "",
-      clean(d.mensaje) || "",
-    ].join("\n");
-    location.href = "mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent("Demo de Plenaria · " + org) + "&body=" + encodeURIComponent(body);
+    button.disabled = true;
+    button.textContent = "Enviando…";
+    try {
+      const res = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(data).toString() });
+      if (!res.ok) throw new Error(String(res.status));
+      form.innerHTML = '<div class="form-ok" role="status"><h3>Solicitud enviada</h3><p>Te escribiremos en uno o dos días laborables para acordar la demo.</p></div>';
+    } catch {
+      err.textContent = "No se ha podido enviar. Vuelve a intentarlo en unos minutos.";
+      button.disabled = false;
+      button.textContent = "Pedir la demo";
+    }
   });
 </script>
 </body>
