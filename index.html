@@ -424,7 +424,9 @@ footer a{color:var(--ink-2)}
         </div>
         <label>Organización<input name="organizacion" autocomplete="organization" required maxlength="120"></label>
         <div class="row2">
-          <label>Fecha prevista del evento<input name="fecha" placeholder="p. ej. octubre de 2027" maxlength="60"></label>
+          <label>Fecha prevista del evento
+            <select name="fecha" id="fecha"><option value="Sin decidir">Aún sin fecha</option></select>
+          </label>
           <label>Asistentes previstos
             <select name="asistentes">
               <option>Hasta 100</option><option selected>Entre 100 y 500</option><option>Entre 500 y 1.000</option><option>Más de 1.000</option>
@@ -462,21 +464,58 @@ footer a{color:var(--ink-2)}
 
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Meses de los próximos tres años para la fecha prevista
+  const MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  const fecha = document.getElementById("fecha");
+  const now = new Date();
+  for (let i = 1; i <= 36; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+    const label = MONTHS[d.getMonth()] + " de " + d.getFullYear();
+    fecha.add(new Option(label.charAt(0).toUpperCase() + label.slice(1), label));
+  }
+
   const form = document.getElementById("demo-form");
   const err = document.getElementById("form-error");
   const button = form.querySelector('button[type="submit"]');
-  const clean = (v) => String(v || "").replace(/[<>]/g, "").replace(/\s+/g, " ").trim();
+  const ALLOWED = { fecha: new Set([...fecha.options].map((o) => o.value)), asistentes: new Set([...form.asistentes.options].map((o) => o.value)) };
+  const LIMITS = { nombre: 80, email: 254, organizacion: 120, mensaje: 1000 };
+  // Quita caracteres de control e invisibles y espacios sobrantes
+  const clean = (v, multiline) => {
+    const t = String(v || "").normalize("NFC").replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "").replace(/[\u{200B}-\u{200F}\u{202A}-\u{202E}\u{2060}-\u{2069}\u{FEFF}]/gu, "");
+    return multiline ? t.replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim() : t.replace(/\s+/g, " ").trim();
+  };
+  const MARKUP = /<\s*\/?\s*[a-z!?][^>]*>|<\s*script|javascript\s*:|data\s*:\s*text\/html/i;
+
+  function check(d) {
+    if (!d.nombre || !d.organizacion) return "Escribe tu nombre y la organización.";
+    if (!/^[\p{L}][\p{L}\p{M} .'’-]*$/u.test(d.nombre)) return "El nombre solo puede llevar letras, espacios, guiones y apóstrofos.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email) || d.email.includes("..")) return "Revisa el email: así no podremos responderte.";
+    for (const k of Object.keys(LIMITS)) if (d[k].length > LIMITS[k]) return "Hay un campo demasiado largo.";
+    if (["nombre", "organizacion", "mensaje"].some((k) => MARKUP.test(d[k]))) return "No se admiten etiquetas HTML ni código.";
+    if (!ALLOWED.fecha.has(d.fecha) || !ALLOWED.asistentes.has(d.asistentes)) return "Elige una opción de la lista.";
+    return null;
+  }
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const data = new FormData(form);
-    const nombre = clean(data.get("nombre")), email = clean(data.get("email")), org = clean(data.get("organizacion"));
-    if (!nombre || !org) { err.textContent = "Escribe tu nombre y la organización."; return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { err.textContent = "Revisa el email: así no podremos responderte."; return; }
+    const raw = new FormData(form);
+    const d = {
+      nombre: clean(raw.get("nombre")),
+      email: clean(raw.get("email")).toLowerCase(),
+      organizacion: clean(raw.get("organizacion")),
+      fecha: String(raw.get("fecha") || ""),
+      asistentes: String(raw.get("asistentes") || ""),
+      mensaje: clean(raw.get("mensaje"), true),
+    };
+    const problem = check(d);
+    if (problem) { err.textContent = problem; return; }
     err.textContent = "";
     button.disabled = true;
     button.textContent = "Enviando…";
+    const body = new URLSearchParams({ "form-name": "demo", subject: raw.get("subject"), "bot-field": raw.get("bot-field") || "", ...d });
     try {
-      const res = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(data).toString() });
+      const res = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body.toString() });
       if (!res.ok) throw new Error(String(res.status));
       form.innerHTML = '<div class="form-ok" role="status"><h3>Solicitud enviada</h3><p>Te escribiremos en uno o dos días laborables para acordar la demo.</p></div>';
     } catch {
