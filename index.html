@@ -168,6 +168,12 @@ section.block .intro{color:var(--ink-2);max-width:60ch;margin:18px 0 0;font-size
 .price .size{color:var(--ink-2);font-size:15px;margin:2px 0 22px}
 .price .amount{font-size:52px;font-weight:600;letter-spacing:-.04em;line-height:1}
 .price .amount small{font-size:16px;font-weight:500;color:var(--ink-2);letter-spacing:0}
+.price .amount small.from{font-size:15px;margin-right:2px}
+.price ul{list-style:none;margin:24px 0 0;padding:0;flex:1}
+.price li{position:relative;padding:9px 0 9px 26px;border-top:1px solid var(--line);font-size:15px;line-height:1.45}
+.price li::before{content:"";position:absolute;left:2px;top:15px;width:12px;height:7px;border-left:2px solid var(--blue);border-bottom:2px solid var(--blue);transform:rotate(-45deg)}
+.price.featured li{border-color:rgba(255,255,255,.22)}
+.price.featured li::before{border-color:#fff}
 .price .btn{margin-top:28px}
 .price.featured{background:linear-gradient(170deg,#0B6FF2,#0857C2);color:#fff;border-color:transparent;box-shadow:0 24px 60px rgba(11,111,242,.25)}
 .price.featured .size,.price.featured .amount small{color:rgba(255,255,255,.85)}
@@ -670,11 +676,41 @@ footer a{color:var(--ink-2)}
 <section class="block" id="precios">
   <div class="wrap">
     <h2>Se paga por congreso, sin cuota anual</h2>
-    <p class="intro">Incluye la puesta en marcha con vuestra configuración, la formación del equipo y el soporte durante el congreso.</p>
+    <p class="intro">Todos los planes incluyen todos los módulos. Cambian el tamaño del congreso, la formación y el soporte. El precio final depende de lo que necesitéis configurar.</p>
     <div class="prices">
-      <div class="price"><h3>Jornada</h3><p class="size">Hasta 100 asistentes</p><div class="amount num">290 € <small>+ IVA</small></div><a class="btn blue" href="#demo">Pide una demo</a></div>
-      <div class="price featured"><h3>Congreso</h3><p class="size">Hasta 500 asistentes</p><div class="amount num">590 € <small>+ IVA</small></div><a class="btn white" href="#demo">Pide una demo</a></div>
-      <div class="price"><h3>Congreso grande</h3><p class="size">Hasta 1.000 asistentes</p><div class="amount num">990 € <small>+ IVA</small></div><a class="btn blue" href="#demo">Pide una demo</a></div>
+      <div class="price">
+        <h3>Jornada</h3><p class="size">Hasta 100 asistentes</p>
+        <div class="amount num"><small class="from">desde</small> 290 € <small>+ IVA</small></div>
+        <ul>
+          <li>Todos los módulos y los cuatro portales</li>
+          <li>Puesta en marcha con vuestra configuración</li>
+          <li>Una sesión de formación</li>
+          <li>Soporte por email durante la jornada</li>
+        </ul>
+        <button class="btn blue" type="button" data-plan="Jornada">Pedir presupuesto</button>
+      </div>
+      <div class="price featured">
+        <h3>Congreso</h3><p class="size">Hasta 500 asistentes</p>
+        <div class="amount num"><small class="from">desde</small> 590 € <small>+ IVA</small></div>
+        <ul>
+          <li>Todo lo del plan Jornada</li>
+          <li>Formación para todo el equipo organizador</li>
+          <li>Revisión conjunta antes de abrir inscripciones</li>
+          <li>Soporte por teléfono los días del congreso</li>
+        </ul>
+        <button class="btn white" type="button" data-plan="Congreso">Pedir presupuesto</button>
+      </div>
+      <div class="price">
+        <h3>Congreso grande</h3><p class="size">Hasta 1.000 asistentes</p>
+        <div class="amount num"><small class="from">desde</small> 990 € <small>+ IVA</small></div>
+        <ul>
+          <li>Todo lo del plan Congreso</li>
+          <li>Formación por perfiles: secretaría, comité y mostrador</li>
+          <li>Una persona de contacto asignada</li>
+          <li>Soporte prioritario antes y durante el congreso</li>
+        </ul>
+        <button class="btn blue" type="button" data-plan="Congreso grande">Pedir presupuesto</button>
+      </div>
     </div>
     <p class="price-notes">Precios de lanzamiento por evento. Más de 1.000 asistentes, varios eventos al año, soporte presencial o adaptaciones: pide presupuesto. Las comisiones de las pasarelas de pago no están incluidas.</p>
   </div>
@@ -695,7 +731,14 @@ footer a{color:var(--ink-2)}
           <label>Nombre<input name="nombre" autocomplete="name" required maxlength="80"></label>
           <label>Email<input name="email" type="email" autocomplete="email" required maxlength="254"></label>
         </div>
-        <label>Organización<input name="organizacion" autocomplete="organization" required maxlength="120"></label>
+        <div class="row2">
+          <label>Organización<input name="organizacion" autocomplete="organization" required maxlength="120"></label>
+          <label>Plan que te interesa
+            <select name="plan" id="plan">
+              <option>Aún no lo sé</option><option>Jornada</option><option>Congreso</option><option>Congreso grande</option><option>Más de 1.000 asistentes</option>
+            </select>
+          </label>
+        </div>
         <div class="row2">
           <label>Fecha prevista del evento
             <select name="fecha" id="fecha"><option value="Sin decidir">Aún sin fecha</option></select>
@@ -751,7 +794,16 @@ footer a{color:var(--ink-2)}
   const form = document.getElementById("demo-form");
   const err = document.getElementById("form-error");
   const button = form.querySelector('button[type="submit"]');
-  const ALLOWED = { fecha: new Set([...fecha.options].map((o) => o.value)), asistentes: new Set([...form.asistentes.options].map((o) => o.value)) };
+  const ALLOWED = { fecha: new Set([...fecha.options].map((o) => o.value)), asistentes: new Set([...form.asistentes.options].map((o) => o.value)), plan: new Set([...form.plan.options].map((o) => o.value)) };
+
+  // «Pedir presupuesto» en cada plan: elige ese plan en el formulario y baja hasta él
+  const SIZE = { "Jornada": "Hasta 100", "Congreso": "Entre 100 y 500", "Congreso grande": "Entre 500 y 1.000" };
+  document.querySelectorAll("[data-plan]").forEach((b) => b.addEventListener("click", () => {
+    form.plan.value = b.dataset.plan;
+    if (SIZE[b.dataset.plan]) form.asistentes.value = SIZE[b.dataset.plan];
+    document.getElementById("demo").scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => form.nombre.focus({ preventScroll: true }), 500);
+  }));
   const LIMITS = { nombre: 80, email: 254, organizacion: 120, mensaje: 1000 };
   // Quita caracteres de control e invisibles y espacios sobrantes
   const clean = (v, multiline) => {
@@ -766,7 +818,7 @@ footer a{color:var(--ink-2)}
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email) || d.email.includes("..")) return "Revisa el email: así no podremos responderte.";
     for (const k of Object.keys(LIMITS)) if (d[k].length > LIMITS[k]) return "Hay un campo demasiado largo.";
     if (["nombre", "organizacion", "mensaje"].some((k) => MARKUP.test(d[k]))) return "No se admiten etiquetas HTML ni código.";
-    if (!ALLOWED.fecha.has(d.fecha) || !ALLOWED.asistentes.has(d.asistentes)) return "Elige una opción de la lista.";
+    if (!ALLOWED.fecha.has(d.fecha) || !ALLOWED.asistentes.has(d.asistentes) || !ALLOWED.plan.has(d.plan)) return "Elige una opción de la lista.";
     return null;
   }
 
@@ -779,6 +831,7 @@ footer a{color:var(--ink-2)}
       organizacion: clean(raw.get("organizacion")),
       fecha: String(raw.get("fecha") || ""),
       asistentes: String(raw.get("asistentes") || ""),
+      plan: String(raw.get("plan") || ""),
       mensaje: clean(raw.get("mensaje"), true),
     };
     const problem = check(d);
@@ -797,6 +850,7 @@ footer a{color:var(--ink-2)}
       organizacion: d.organizacion,
       fecha_prevista: d.fecha,
       asistentes: d.asistentes,
+      plan: d.plan,
       mensaje: d.mensaje || "(sin mensaje)",
     };
     try {
