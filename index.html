@@ -747,10 +747,9 @@ footer a{color:var(--ink-2)}
         <p class="intro">En una videollamada de media hora recorremos un congreso completo, de las inscripciones a los diplomas, y vemos cómo encajaría el vuestro.</p>
         <p class="intro">Estamos en fase de lanzamiento: configuramos personalmente cada congreso con quien organiza.</p>
       </div>
-      <form class="req" id="demo-form" name="demo" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
-        <input type="hidden" name="form-name" value="demo">
+      <form class="req" id="demo-form" novalidate>
         <input type="hidden" name="subject" value="Solicitud de demo de Plenaria">
-        <p hidden><label>No rellenes este campo <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" hidden aria-hidden="true">
         <div class="row2">
           <label>Nombre<input name="nombre" autocomplete="name" required maxlength="80"></label>
           <label>Email<input name="email" type="email" autocomplete="email" required maxlength="254"></label>
@@ -846,10 +845,23 @@ footer a{color:var(--ink-2)}
     err.textContent = "";
     button.disabled = true;
     button.textContent = "Enviando…";
-    const body = new URLSearchParams({ "form-name": "demo", subject: raw.get("subject"), "bot-field": raw.get("bot-field") || "", ...d });
+    // Envío con Web3Forms: reenvía la solicitud al correo de Plenaria. La clave es pública por diseño.
+    const payload = {
+      access_key: "bd91d6ef-0b84-48be-aeee-0c988262a58d",
+      subject: String(raw.get("subject") || "Solicitud de demo de Plenaria"),
+      from_name: "Web de Plenaria",
+      botcheck: raw.get("botcheck") ? true : "",
+      name: d.nombre,
+      email: d.email,
+      organizacion: d.organizacion,
+      fecha_prevista: d.fecha,
+      asistentes: d.asistentes,
+      mensaje: d.mensaje || "(sin mensaje)",
+    };
     try {
-      const res = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body.toString() });
-      if (!res.ok) throw new Error(String(res.status));
+      const res = await fetch("https://api.web3forms.com/submit", { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(payload) });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok || !out.success) throw new Error(out.message || String(res.status));
       form.innerHTML = '<div class="form-ok" role="status"><h3>Solicitud enviada</h3><p>Te escribiremos en uno o dos días laborables para acordar la demo.</p></div>';
     } catch {
       err.textContent = "No se ha podido enviar. Vuelve a intentarlo en unos minutos.";

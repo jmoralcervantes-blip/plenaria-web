@@ -1,17 +1,16 @@
 # Plenaria · web comercial
 
 Página estática (HTML y CSS, sin compilación) para presentar Plenaria y recibir solicitudes de demo.
-Publicada en Netlify: https://plenaria-congresos.netlify.app
+Se publica en Cloudflare Pages desde este repositorio (sin comando de compilación; carpeta de salida `/`).
+Dominio: https://plenaria.es
 
 ## Formulario de demo
 
-Usa Netlify Forms (gratis hasta 100 solicitudes al mes). Las solicitudes aparecen en Netlify › proyecto
-plenaria-congresos › Forms › demo. Para recibirlas por email: Forms › Form notifications › Add notification › Email.
+Usa Web3Forms (gratis hasta 250 solicitudes al mes). Cada solicitud llega por email a la cuenta de Web3Forms
+y queda también en app.web3forms.com › formulario «Plenaria» › Submissions. La clave de acceso está en
+`index.html` y es pública por diseño: solo permite enviar correos a esa cuenta.
 
-## Antes de anunciarla
+## Cabeceras de seguridad
 
-En `aviso-legal.html` y `privacidad.html`, completa lo marcado entre corchetes: titular, NIF, domicilio, correo y fecha.
-
-## Dominio propio
-
-En Netlify › Domain management › Add a domain. El dominio se puede comprar allí mismo o en cualquier registrador.
+`_headers` (formato compatible con Cloudflare Pages): CSP, canonical y demás. Si se añade un servicio externo
+al que la página haga peticiones, hay que permitirlo en `connect-src`.
