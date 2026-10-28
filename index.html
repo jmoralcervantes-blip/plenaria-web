@@ -200,6 +200,158 @@ textarea{min-height:96px;resize:vertical}
 .faq details[open] summary::after{content:"−"}
 .faq details p{margin:0 0 20px;color:var(--ink-2);max-width:68ch}
 
+/* Carrusel «Por dentro» */
+.tour-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.tour-ctrl{display:flex;gap:10px}
+.try{margin:14px 0 0;font-weight:600}
+.try a{text-decoration:none}
+.try a:hover{text-decoration:underline}
+.tour-ctrl button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:background .15s ease}
+.tour-ctrl button:hover{background:var(--blue-soft)}
+.tour-ctrl svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
+.tour{margin-top:40px;background:var(--bg-2);border:1px solid var(--line);border-radius:28px;overflow:hidden}
+.tour-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}
+.tour-track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;min-width:0;scroll-snap-align:start;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:40px;align-items:center;padding:44px 48px}
+.slide > *{min-width:0}
+.slide .tx .step{font-size:14px;font-weight:600;color:var(--blue)}
+.slide .tx h3{font-size:clamp(24px,2.4vw,32px);line-height:1.15;letter-spacing:-.03em;margin:8px 0 12px}
+.slide .tx p{margin:0;color:var(--ink-2);font-size:17px}
+.slide .tx ul{list-style:none;margin:20px 0 0;padding:0}
+.slide .tx li{padding:8px 0 8px 26px;position:relative;font-size:15px;border-top:1px solid var(--line)}
+.slide .tx li::before{content:"";position:absolute;left:2px;top:14px;width:12px;height:7px;border-left:2px solid var(--blue);border-bottom:2px solid var(--blue);transform:rotate(-45deg)}
+.tour-dots{display:flex;justify-content:center;gap:8px;padding:0 0 26px}
+.tour-dots button{border:0;padding:0;width:9px;height:9px;border-radius:999px;background:#C9D3E0;cursor:pointer;transition:width .2s ease,background .2s ease}
+.tour-dots button[aria-current="true"]{width:28px;background:var(--blue)}
+
+/* Ventana de la aplicación dibujada */
+.win{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px rgba(11,60,140,.14);overflow:hidden;font-size:13px;color:var(--ink);min-width:0}
+.win .bar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.win .bar i{width:9px;height:9px;border-radius:50%;background:#D5DCE6;display:block}
+.win .bar b{font-weight:500;color:var(--ink-2);margin-left:6px;font-size:12px}
+.win .bd{padding:16px 18px 18px}
+.win h5{font-size:16px;margin:0 0 12px;letter-spacing:-.01em;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.win .chip{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--blue-soft);color:var(--blue);white-space:nowrap}
+.win .chip.ok{background:#E6F6EE;color:var(--green)}
+.win .chip.warn{background:#FFF4D9;color:#946200}
+.win .chip.bad{background:#FDECEC;color:var(--red)}
+.win .muted{color:var(--ink-2)}
+
+/* 1 · Programa */
+.agenda{display:grid;grid-template-columns:44px repeat(3,minmax(0,1fr));gap:6px}
+.agenda .h{font-weight:600;font-size:12px;color:var(--ink-2);padding:0 4px 4px}
+.agenda .t{font-size:11px;color:var(--ink-2);padding-top:4px}
+.agenda .s{border-radius:8px;padding:7px 8px;background:var(--blue-soft);border-left:3px solid var(--blue);font-size:12px;line-height:1.3;min-height:46px}
+.agenda .s small{display:block;color:var(--ink-2);font-size:11px;margin-top:2px}
+.agenda .s.g{background:#EEF8F2;border-color:var(--green)}
+.agenda .s.y{background:#FFF7E3;border-color:#E0A100}
+.agenda .s.x{background:#FDECEC;border-color:var(--red)}
+.agenda .e{border:1px dashed var(--line);border-radius:8px;min-height:46px}
+.notice{margin-top:12px;display:flex;gap:8px;align-items:flex-start;background:#FDECEC;color:#9B2323;border-radius:10px;padding:9px 12px;font-size:12px}
+
+/* 2 · Comité */
+.rev{width:100%;border-collapse:collapse}
+.rev th{text-align:left;font-weight:500;color:var(--ink-2);font-size:12px;padding:7px 8px;border-bottom:1px solid var(--line)}
+.rev td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+.rev td:first-child{white-space:nowrap;font-size:12px}
+.score{display:flex;align-items:center;gap:8px}
+.score span{display:block;height:6px;border-radius:999px;background:var(--blue);min-width:4px}
+.score em{font-style:normal;font-weight:600;font-variant-numeric:tabular-nums;font-size:12px}
+.crit{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.crit div{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:11px;color:var(--ink-2)}
+.crit b{display:block;font-size:16px;color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* 3 · Acreditación */
+.acc{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:16px;align-items:start}
+.find{display:flex;align-items:center;gap:8px;border:1.5px solid var(--blue);border-radius:10px;padding:9px 11px;font-size:13px}
+.find svg{width:15px;height:15px;stroke:var(--ink-2);fill:none;stroke-width:2;flex:none}
+.find .caret{width:1.5px;height:15px;background:var(--blue)}
+.person{margin-top:12px;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.person .nm{font-weight:600;font-size:15px}
+.checks{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:5px;font-size:12px}
+.checks li::before{content:"✓";color:var(--green);font-weight:700;margin-right:7px}
+.acc .go{margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--blue);color:#fff;border-radius:10px;padding:10px;font-weight:600}
+.badge{border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;background:#fff;box-shadow:0 10px 24px rgba(15,27,45,.08)}
+.badge .lbl{font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--blue)}
+.badge svg{width:100%;height:auto;margin:8px 0}
+.badge .who{font-weight:600;font-size:13px;line-height:1.2}
+.badge .typ{font-size:11px;color:var(--ink-2)}
+.counter{display:flex;gap:16px;margin-top:12px;font-size:12px;color:var(--ink-2)}
+.counter b{color:var(--ink);font-size:16px;font-variant-numeric:tabular-nums;display:block}
+
+/* 4 · Plano */
+.floor{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;background:repeating-linear-gradient(0deg,#F6F8FB 0 18px,#FFFFFF 18px 36px);border:1px solid var(--line);border-radius:12px;padding:12px}
+.floor .st{aspect-ratio:1.25;border-radius:6px;display:grid;place-items:center;font-size:11px;font-weight:600;font-variant-numeric:tabular-nums}
+.floor .v{background:var(--blue);color:#fff}
+.floor .r{background:#FFE7A8;color:#7A5200}
+.floor .l{background:#fff;border:1.5px dashed #AFC0D6;color:var(--ink-2)}
+.floor .big2{grid-column:span 2;aspect-ratio:auto}
+.floor .sel{outline:3px solid #FFD25E;outline-offset:1px}
+.floor .aisle{grid-column:1/-1;height:16px;display:grid;place-items:center;font-size:10px;letter-spacing:.12em;color:#9AA6B6}
+.floor-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--ink-2)}
+.floor-legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.floor-legend .a::before{background:var(--blue)}
+.floor-legend .b::before{background:#FFE7A8}
+.floor-legend .c::before{background:#fff;border:1.5px dashed #AFC0D6}
+.pop{margin-top:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+
+/* 5 · Presupuesto */
+.bud{display:grid;gap:12px}
+.bud .row{display:grid;grid-template-columns:120px minmax(0,1fr) 92px;gap:12px;align-items:center}
+.bud .nm{font-size:12px;font-weight:500}
+.bud .trk{position:relative;height:14px;border-radius:999px;background:#EEF1F5}
+.bud .trk span{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:var(--blue)}
+.bud .trk span.over{background:var(--red)}
+.bud .trk i{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);border-radius:2px}
+.bud .val{text-align:right;font-variant-numeric:tabular-nums;font-size:12px}
+.bud .val small{display:block;color:var(--ink-2);font-size:11px}
+.bud .val small.bad{color:var(--red);font-weight:600}
+.tot{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.tot div{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:11px;color:var(--ink-2)}
+.tot b{display:block;color:var(--ink);font-size:16px;font-variant-numeric:tabular-nums}
+.tot .pos{color:var(--green)}
+
+/* 6 · Portal del asistente */
+.phone-wrap{display:flex;justify-content:center;gap:22px;align-items:center}
+.phone{width:230px;border-radius:34px;background:#0F1B2D;padding:9px;box-shadow:0 24px 60px rgba(11,60,140,.22)}
+.phone .scr{background:#fff;border-radius:26px;overflow:hidden;font-size:12px}
+.phone .ph{background:linear-gradient(160deg,#0B6FF2,#2E8BFF);color:#fff;padding:18px 16px 14px}
+.phone .ph small{opacity:.85;font-size:11px}
+.phone .ph div{font-weight:600;font-size:15px;margin-top:2px}
+.phone .qrbox{margin:-2px 16px 0;transform:translateY(10px);background:#fff;border-radius:14px;box-shadow:0 8px 20px rgba(15,27,45,.12);padding:10px;text-align:center}
+.phone .qrbox svg{width:120px;height:120px}
+.phone .qrbox p{margin:2px 0 0;font-size:10px;color:var(--ink-2)}
+.phone .list{padding:22px 14px 14px;display:grid;gap:8px}
+.phone .it{border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.phone .it b{display:block;font-size:12px}
+.phone .it span{color:var(--ink-2);font-size:11px}
+.phone .tabs{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);font-size:10px;color:var(--ink-2);text-align:center;padding:8px 0 10px}
+.phone .tabs .on{color:var(--blue);font-weight:600}
+.side-cards{display:grid;gap:10px;width:200px}
+.side-cards .win .bd{padding:12px 14px}
+
+@media (max-width:980px){
+  .slide{grid-template-columns:minmax(0,1fr);gap:26px;padding:30px 24px;align-items:start;align-content:start}
+  .side-cards{display:none}
+}
+@media (max-width:560px){
+  .slide{padding:24px 18px}
+  .agenda{grid-template-columns:36px repeat(2,minmax(0,1fr))}
+  .agenda .c3{display:none}
+  .acc{grid-template-columns:1fr}
+  .acc .badge{display:none}
+  .crit{grid-template-columns:1fr 1fr}
+  .rev .hide-xs{display:none}
+  .rev td,.rev th{padding-left:4px;padding-right:4px}
+  .win .chip{font-size:10px;padding:2px 6px}
+  .floor{gap:4px;padding:8px}
+  .floor .st{font-size:10px}
+  .bud .row{grid-template-columns:92px minmax(0,1fr) 80px;gap:8px}
+  .tour-ctrl{display:none}
+  .tot b{font-size:14px;white-space:nowrap}
+  .tot div{padding:8px}
+}
+
 footer{margin-top:120px;border-top:1px solid var(--line);padding:32px 0 48px;font-size:14px;color:var(--ink-2)}
 footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 footer a{color:var(--ink-2)}
@@ -214,6 +366,7 @@ footer a{color:var(--ink-2)}
         Plenaria
       </a>
       <nav class="pill" aria-label="Secciones">
+        <a href="#por-dentro">Por dentro</a>
         <a href="#que-gestiona">Qué gestiona</a>
         <a href="#portales">Portales</a>
         <a href="#precios">Precios</a>
@@ -296,6 +449,186 @@ footer a{color:var(--ink-2)}
     </div>
   </div>
 </div>
+
+<section class="block" id="por-dentro">
+  <div class="wrap">
+    <div class="tour-head">
+      <div>
+        <h2>Así se ve por dentro</h2>
+        <p class="intro">Seis pantallas de las que más se usan durante la preparación y el propio congreso. Los datos son de ejemplo.</p>
+        <p class="try"><a href="https://plenaria-demo-publica.lovable.app" target="_blank" rel="noopener">Pruébala tú mismo con un congreso de ejemplo →</a></p>
+      </div>
+      <div class="tour-ctrl">
+        <button type="button" data-tour="prev" aria-label="Pantalla anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" data-tour="next" aria-label="Pantalla siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+
+    <div class="tour" role="region" aria-roledescription="carrusel" aria-label="Pantallas de Plenaria">
+      <div class="tour-track" id="tour-track" tabindex="0">
+
+        <article class="slide" role="group" aria-roledescription="pantalla" aria-label="1 de 6: Programa científico">
+          <div class="tx">
+            <div class="step">Programa científico</div>
+            <h3>El programa, por salas y horas</h3>
+            <p>Montas las sesiones arrastrándolas a su sala y hora. Si un ponente tiene dos sesiones a la vez, la plataforma te avisa.</p>
+            <ul><li>Ponentes y moderadores en cada sesión</li><li>Comunicaciones aceptadas, listas para programar</li><li>El programa público se actualiza solo</li></ul>
+          </div>
+          <div class="win" aria-hidden="true">
+            <div class="bar"><i></i><i></i><i></i><b>Programa · Viernes 22 de octubre</b></div>
+            <div class="bd">
+              <div class="agenda">
+                <div></div><div class="h">Auditorio</div><div class="h">Sala 2</div><div class="h c3">Sala 3</div>
+                <div class="t num">09:00</div><div class="s">Inauguración<small>Comité organizador</small></div><div class="e"></div><div class="e c3"></div>
+                <div class="t num">09:30</div><div class="s">Mesa: cirugía mínimamente invasiva<small>Dra. Ana Lozano · 4 ponentes</small></div><div class="s g">Taller de biomecánica<small>24 / 24 plazas</small></div><div class="s y c3">Comunicaciones orales I<small>6 trabajos</small></div>
+                <div class="t num">11:00</div><div class="s">Pausa café<small>Zona de exposición</small></div><div class="s">Pausa café<small>Zona de exposición</small></div><div class="e c3"></div>
+                <div class="t num">11:30</div><div class="s">Conferencia: pie diabético<small>Dr. Luis Herrero</small></div><div class="s x">Ecografía práctica<small>Dr. Luis Herrero</small></div><div class="s y c3">Comunicaciones orales II<small>6 trabajos</small></div>
+              </div>
+              <div class="notice"><b>Conflicto:</b> Dr. Luis Herrero está a la misma hora en el Auditorio y en la Sala 2.</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" role="group" aria-roledescription="pantalla" aria-label="2 de 6: Comité científico">
+          <div class="tx">
+            <div class="step">Comité científico</div>
+            <h3>Evaluación ciega, con ranking</h3>
+            <p>Cada evaluador puntúa los trabajos de su área sin ver quién los firma. La nota media y el ranking se calculan solos.</p>
+            <ul><li>Reparto de trabajos equilibrado entre evaluadores</li><li>Criterios y pesos definidos por el comité</li><li>Aceptación, cambios o rechazo con un clic</li></ul>
+          </div>
+          <div class="win" aria-hidden="true">
+            <div class="bar"><i></i><i></i><i></i><b>Comité científico · Ranking</b></div>
+            <div class="bd">
+              <h5>148 comunicaciones <span class="chip warn">32 en evaluación</span></h5>
+              <table class="rev">
+                <thead><tr><th class="hide-xs">Ref.</th><th>Título</th><th class="hide-xs">Área</th><th>Nota</th><th></th></tr></thead>
+                <tbody>
+                  <tr><td class="num muted hide-xs">CN2027-7KX3</td><td>Plantillas a medida en corredores</td><td class="hide-xs muted">Deporte</td><td><div class="score"><span style="width:58px"></span><em>9,1</em></div></td><td><span class="chip ok">Aceptada</span></td></tr>
+                  <tr><td class="num muted hide-xs">CN2027-Q8M2</td><td>Úlceras en pie diabético: serie de casos</td><td class="hide-xs muted">Pie diabético</td><td><div class="score"><span style="width:54px"></span><em>8,7</em></div></td><td><span class="chip ok">Aceptada</span></td></tr>
+                  <tr><td class="num muted hide-xs">CN2027-3PZ9</td><td>Marcha infantil y calzado escolar</td><td class="hide-xs muted">Infantil</td><td><div class="score"><span style="width:44px"></span><em>7,2</em></div></td><td><span class="chip warn">Cambios</span></td></tr>
+                  <tr><td class="num muted hide-xs">CN2027-H4T6</td><td>Onicocriptosis: técnica comparada</td><td class="hide-xs muted">Cirugía</td><td><div class="score"><span style="width:26px"></span><em>—</em></div></td><td><span class="chip">En curso</span></td></tr>
+                </tbody>
+              </table>
+              <div class="crit">
+                <div><b>40 %</b>Originalidad</div><div><b>30 %</b>Método</div><div><b>20 %</b>Resultados</div><div><b>10 %</b>Claridad</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" role="group" aria-roledescription="pantalla" aria-label="3 de 6: Acreditación">
+          <div class="tx">
+            <div class="step">El día del congreso</div>
+            <h3>Acreditación en segundos</h3>
+            <p>En el mostrador buscas a la persona, compruebas que todo está en orden e imprimes su credencial con un QR único.</p>
+            <ul><li>Pago, tipo de inscripción y talleres de un vistazo</li><li>Autoservicio con el QR del email de confirmación</li><li>El mismo QR controla la entrada a cada sala</li></ul>
+          </div>
+          <div class="win" aria-hidden="true">
+            <div class="bar"><i></i><i></i><i></i><b>Acreditaciones · Mostrador 2</b></div>
+            <div class="bd">
+              <div class="acc">
+                <div>
+                  <div class="find"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>laura mart<span class="caret"></span></div>
+                  <div class="person">
+                    <div class="nm">Laura Martín Vidal</div>
+                    <div class="muted">INS-0612 · Colegiado · tarifa anticipada</div>
+                    <ul class="checks"><li>Inscripción pagada · factura emitida</li><li>Taller de biomecánica · viernes 9:30</li><li>Cena del congreso · menú sin gluten</li></ul>
+                  </div>
+                  <div class="go">Acreditar e imprimir credencial</div>
+                  <div class="counter"><div><b>412</b>acreditados</div><div><b>200</b>por llegar</div><div><b>1 min</b>de espera media</div></div>
+                </div>
+                <div class="badge">
+                  <div class="lbl">CONGRESO NACIONAL 2027</div>
+                  <svg viewBox="-2 -2 25 25"><rect x="-2" y="-2" width="25" height="25" fill="#fff"/><path id="qr-demo" fill="#0F1B2D" d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM9 0h1v1h-1zM11 0h1v1h-1zM14 0h1v1h-1zM15 0h1v1h-1zM16 0h1v1h-1zM17 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM11 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM20 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM9 2h1v1h-1zM10 2h1v1h-1zM12 2h1v1h-1zM14 2h1v1h-1zM16 2h1v1h-1zM17 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM12 3h1v1h-1zM14 3h1v1h-1zM16 3h1v1h-1zM17 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM9 4h1v1h-1zM11 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM16 4h1v1h-1zM17 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM9 5h1v1h-1zM11 5h1v1h-1zM14 5h1v1h-1zM20 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM9 6h1v1h-1zM11 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM15 6h1v1h-1zM16 6h1v1h-1zM17 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM11 7h1v1h-1zM0 8h1v1h-1zM1 8h1v1h-1zM4 8h1v1h-1zM9 8h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM0 9h1v1h-1zM4 9h1v1h-1zM7 9h1v1h-1zM9 9h1v1h-1zM14 9h1v1h-1zM15 9h1v1h-1zM17 9h1v1h-1zM18 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM0 10h1v1h-1zM2 10h1v1h-1zM3 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM12 10h1v1h-1zM13 10h1v1h-1zM14 10h1v1h-1zM17 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM20 10h1v1h-1zM2 11h1v1h-1zM3 11h1v1h-1zM4 11h1v1h-1zM5 11h1v1h-1zM12 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM0 12h1v1h-1zM1 12h1v1h-1zM2 12h1v1h-1zM3 12h1v1h-1zM4 12h1v1h-1zM5 12h1v1h-1zM6 12h1v1h-1zM7 12h1v1h-1zM8 12h1v1h-1zM9 12h1v1h-1zM10 12h1v1h-1zM13 12h1v1h-1zM14 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM20 12h1v1h-1zM9 13h1v1h-1zM10 13h1v1h-1zM11 13h1v1h-1zM12 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM18 13h1v1h-1zM20 13h1v1h-1zM0 14h1v1h-1zM1 14h1v1h-1zM2 14h1v1h-1zM3 14h1v1h-1zM4 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM12 14h1v1h-1zM13 14h1v1h-1zM14 14h1v1h-1zM18 14h1v1h-1zM19 14h1v1h-1zM0 15h1v1h-1zM6 15h1v1h-1zM13 15h1v1h-1zM15 15h1v1h-1zM16 15h1v1h-1zM17 15h1v1h-1zM18 15h1v1h-1zM19 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM3 16h1v1h-1zM4 16h1v1h-1zM6 16h1v1h-1zM9 16h1v1h-1zM13 16h1v1h-1zM14 16h1v1h-1zM15 16h1v1h-1zM16 16h1v1h-1zM17 16h1v1h-1zM0 17h1v1h-1zM2 17h1v1h-1zM3 17h1v1h-1zM4 17h1v1h-1zM6 17h1v1h-1zM8 17h1v1h-1zM11 17h1v1h-1zM16 17h1v1h-1zM17 17h1v1h-1zM19 17h1v1h-1zM0 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM6 18h1v1h-1zM9 18h1v1h-1zM10 18h1v1h-1zM13 18h1v1h-1zM14 18h1v1h-1zM15 18h1v1h-1zM18 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM9 19h1v1h-1zM11 19h1v1h-1zM12 19h1v1h-1zM17 19h1v1h-1zM20 19h1v1h-1zM0 20h1v1h-1zM1 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM5 20h1v1h-1zM6 20h1v1h-1zM8 20h1v1h-1zM9 20h1v1h-1zM10 20h1v1h-1zM12 20h1v1h-1zM13 20h1v1h-1zM14 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM20 20h1v1h-1z"/></svg>
+                  <div class="who">Laura Martín Vidal</div>
+                  <div class="typ">Congresista</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" role="group" aria-roledescription="pantalla" aria-label="4 de 6: Plano comercial">
+          <div class="tx">
+            <div class="step">Comercial</div>
+            <h3>Los stands, sobre el plano</h3>
+            <p>Ves qué stands están vendidos, reservados o libres, y quién ocupa cada uno. Útil en las reuniones con patrocinadores.</p>
+            <ul><li>Contrato, factura y pago de cada expositor</li><li>Acreditaciones del personal del stand</li><li>Precio por superficie y ubicación</li></ul>
+          </div>
+          <div class="win" aria-hidden="true">
+            <div class="bar"><i></i><i></i><i></i><b>Plano comercial · Pabellón principal</b></div>
+            <div class="bd">
+              <h5>11 de 15 stands vendidos <span class="chip warn">2 reservados</span></h5>
+              <div class="floor">
+                <div class="st v">1</div><div class="st v">2</div><div class="st v">3</div><div class="st r">4</div><div class="st v">5</div><div class="st v">6</div><div class="st l">7</div><div class="st v">8</div>
+                <div class="aisle">PASILLO CENTRAL</div>
+                <div class="st v big2">9 · Oro</div><div class="st v sel">11</div><div class="st v">12</div><div class="st r">13</div><div class="st v">14</div><div class="st l">15</div><div class="st v">16</div>
+              </div>
+              <div class="floor-legend"><span class="a">Vendido</span><span class="b">Reservado</span><span class="c">Libre</span></div>
+              <div class="pop"><span><b>Stand 11</b> · <span class="muted">Ortopedia Ejemplo S.L. · 9 m²</span></span><span class="chip ok">Pagado</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" role="group" aria-roledescription="pantalla" aria-label="5 de 6: Presupuesto">
+          <div class="tx">
+            <div class="step">Finanzas</div>
+            <h3>El presupuesto, al día</h3>
+            <p>Para cada partida ves lo previsto frente a lo comprometido. Las desviaciones aparecen en rojo antes de que sean un problema.</p>
+            <ul><li>Facturas de proveedores y su estado de pago</li><li>Cobros de inscripciones, stands y patrocinios</li><li>Cuenta de resultados al cerrar el congreso</li></ul>
+          </div>
+          <div class="win" aria-hidden="true">
+            <div class="bar"><i></i><i></i><i></i><b>Presupuesto · Gastos (sin IVA)</b></div>
+            <div class="bd">
+              <div class="bud">
+                <div class="row"><span class="nm">Sede y montaje</span><div class="trk"><span style="width:92%"></span><i style="left:96%"></i></div><span class="val num">78.000 €<small>de 82.000 €</small></span></div>
+                <div class="row"><span class="nm">Catering</span><div class="trk"><span style="width:81%"></span><i style="left:88%"></i></div><span class="val num">46.200 €<small>de 50.000 €</small></span></div>
+                <div class="row"><span class="nm">Audiovisuales</span><div class="trk"><span class="over" style="width:100%"></span><i style="left:87%"></i></div><span class="val num">32.250 €<small class="bad">+4.250 €</small></span></div>
+                <div class="row"><span class="nm">Viajes de ponentes</span><div class="trk"><span style="width:63%"></span><i style="left:90%"></i></div><span class="val num">18.900 €<small>de 27.000 €</small></span></div>
+                <div class="row"><span class="nm">Imprenta y señalética</span><div class="trk"><span style="width:55%"></span><i style="left:80%"></i></div><span class="val num">6.600 €<small>de 9.600 €</small></span></div>
+              </div>
+              <div class="tot"><div><b>412.300 €</b>Ingresos</div><div><b>398.700 €</b>Gastos</div><div><b class="pos">+13.600 €</b>Resultado</div></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" role="group" aria-roledescription="pantalla" aria-label="6 de 6: Portal del asistente">
+          <div class="tx">
+            <div class="step">Portales</div>
+            <h3>Todo en el móvil de cada asistente</h3>
+            <p>Cada congresista tiene su portal: su QR de entrada, el programa, sus talleres, sus facturas y, al terminar, su diploma.</p>
+            <ul><li>Sin llamadas ni correos a la secretaría</li><li>Portales también para ponentes y expositores</li><li>Diplomas con código de verificación</li></ul>
+          </div>
+          <div class="phone-wrap" aria-hidden="true">
+            <div class="phone"><div class="scr">
+              <div class="ph"><small>Congreso Nacional 2027</small><div>Hola, Laura</div></div>
+              <div class="qrbox"><svg viewBox="-2 -2 25 25"><rect x="-2" y="-2" width="25" height="25" fill="#fff"/><use href="#qr-demo"/></svg><p>Tu entrada · INS-0612</p></div>
+              <div class="list">
+                <div class="it"><b>Ahora · Auditorio</b><span>Conferencia: pie diabético</span></div>
+                <div class="it"><b>Tus talleres</b><span>Biomecánica · viernes 9:30</span></div>
+                <div class="it"><b>Factura F-2027-0612</b><span>Pagada · descargar PDF</span></div>
+              </div>
+              <div class="tabs"><span class="on">Inicio</span><span>Programa</span><span>Facturas</span><span>Diploma</span></div>
+            </div></div>
+            <div class="side-cards">
+              <div class="win"><div class="bd"><b>Diploma disponible</b><div class="muted">Asistencia del 92 % · 14 horas</div><div style="margin-top:8px"><span class="chip ok">Verificable</span></div></div></div>
+              <div class="win"><div class="bd"><b>Encuesta</b><div class="muted">Valora el congreso y cada sesión en 2 minutos</div></div></div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+      <div class="tour-dots" role="group" aria-label="Elegir pantalla">
+        <button type="button" aria-label="Programa científico" aria-current="true"></button>
+        <button type="button" aria-label="Comité científico"></button>
+        <button type="button" aria-label="Acreditación"></button>
+        <button type="button" aria-label="Plano comercial"></button>
+        <button type="button" aria-label="Presupuesto"></button>
+        <button type="button" aria-label="Portal del asistente"></button>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="block">
   <div class="wrap">
@@ -524,6 +857,55 @@ footer a{color:var(--ink-2)}
       button.textContent = "Pedir la demo";
     }
   });
+
+/* Carrusel «Así se ve por dentro»: flechas, puntos, teclado y avance automático
+   (se detiene al pasar el ratón, al tocarlo o si se prefiere menos movimiento). */
+(function () {
+  const track = document.getElementById("tour-track");
+  if (!track) return;
+  const slides = Array.from(track.querySelectorAll(".slide"));
+  const dots = Array.from(document.querySelectorAll(".tour-dots button"));
+  const region = track.closest(".tour");
+  let current = 0;
+  let timer = null;
+  let stopped = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const go = (i) => {
+    current = (i + slides.length) % slides.length;
+    track.scrollTo({ left: current * track.clientWidth, behavior: "smooth" });
+  };
+  const mark = (i) => {
+    current = i;
+    dots.forEach((d, k) => d.setAttribute("aria-current", k === i ? "true" : "false"));
+  };
+  const stop = () => { stopped = true; clearInterval(timer); };
+  const start = () => {
+    clearInterval(timer);
+    if (!stopped) timer = setInterval(() => { if (!document.hidden) go(current + 1); }, 7000);
+  };
+
+  let raf = 0;
+  track.addEventListener("scroll", () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => mark(Math.round(track.scrollLeft / track.clientWidth)));
+  });
+  document.querySelector('[data-tour="prev"]').addEventListener("click", () => { stop(); go(current - 1); });
+  document.querySelector('[data-tour="next"]').addEventListener("click", () => { stop(); go(current + 1); });
+  dots.forEach((d, k) => d.addEventListener("click", () => { stop(); go(k); }));
+  track.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); stop(); go(current + 1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); stop(); go(current - 1); }
+  });
+  ["pointerdown", "wheel", "touchstart"].forEach((ev) => track.addEventListener(ev, stop, { passive: true }));
+  region.addEventListener("mouseenter", () => clearInterval(timer));
+  region.addEventListener("mouseleave", start);
+  region.addEventListener("focusin", () => clearInterval(timer));
+  window.addEventListener("resize", () => track.scrollTo({ left: current * track.clientWidth }));
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((entries) => entries.forEach((en) => (en.isIntersecting ? start() : clearInterval(timer))), { threshold: 0.4 }).observe(region);
+  } else start();
+})();
 </script>
 </body>
 </html>
