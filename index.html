@@ -193,6 +193,8 @@ section.block .intro{color:var(--ink-2);max-width:60ch;margin:18px 0 0;font-size
   background:radial-gradient(50% 60% at 0% 100%,rgba(255,255,255,.35),rgba(255,255,255,0) 70%),linear-gradient(160deg,#0B6FF2,#2E8BFF 60%,#6FB0FF)}
 .demo-box h2{color:#fff}
 .demo-box .intro{color:rgba(255,255,255,.9)!important}
+.demo-box .mail{margin:28px 0 0;font-size:18px;color:rgba(255,255,255,.9)}
+.demo-box .mail a{color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px}
 form.req{background:#fff;color:var(--ink);border-radius:20px;padding:28px;display:grid;gap:16px;box-shadow:0 20px 50px rgba(8,60,140,.25)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 label{display:grid;gap:6px;font-size:14px;font-weight:600}
@@ -731,6 +733,7 @@ footer a{color:var(--ink-2)}
         <h2>Te lo enseñamos con un congreso de ejemplo</h2>
         <p class="intro">En una videollamada de media hora recorremos un congreso completo, de las inscripciones a los diplomas, y vemos cómo encajaría el vuestro.</p>
         <p class="intro">Estamos en fase de lanzamiento: configuramos personalmente cada congreso con quien organiza.</p>
+        <p class="mail">¿Prefieres escribirnos? <a href="mailto:hola@plenaria.es">hola@plenaria.es</a></p>
       </div>
       <form class="req" id="demo-form" novalidate>
         <input type="hidden" name="subject" value="Solicitud de demo de Plenaria">
@@ -782,7 +785,7 @@ footer a{color:var(--ink-2)}
 <footer>
   <div class="wrap">
     <span>© <span class="num" id="year">2026</span> Plenaria</span>
-    <span><a href="aviso-legal.html">Aviso legal</a> &nbsp; <a href="privacidad.html">Privacidad</a></span>
+    <span><a href="mailto:hola@plenaria.es">hola@plenaria.es</a> &nbsp; <a href="aviso-legal.html">Aviso legal</a> &nbsp; <a href="privacidad.html">Privacidad</a></span>
   </div>
 </footer>
 
@@ -867,7 +870,7 @@ footer a{color:var(--ink-2)}
       if (!res.ok || !out.success) throw new Error(out.message || String(res.status));
       form.innerHTML = '<div class="form-ok" role="status"><h3>Solicitud enviada</h3><p>Te escribiremos en uno o dos días laborables para acordar la demo.</p></div>';
     } catch {
-      err.textContent = "No se ha podido enviar. Vuelve a intentarlo en unos minutos.";
+      err.textContent = "No se ha podido enviar. Vuelve a intentarlo en unos minutos o escríbenos a hola@plenaria.es.";
       button.disabled = false;
       button.textContent = "Pedir la demo";
     }
