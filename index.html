@@ -264,6 +264,8 @@ section.block .intro{color:var(--ink-2);max-width:60ch;margin:18px 0 0;font-size
 .price .btn{margin-top:28px}
 .price.featured{background:linear-gradient(170deg,#0B6FF2,#0857C2);color:#fff;border-color:transparent;box-shadow:0 24px 60px rgba(11,111,242,.25)}
 .price.featured .size,.price.featured .amount small{color:rgba(255,255,255,.85)}
+.launch{display:inline-block;margin:28px 0 0;padding:10px 16px;border-radius:12px;background:#FFF4D9;color:#5C3D00;font-size:15px}
+.launch b{color:#3D2900}
 .price-notes{font-size:15px;color:var(--ink-2);margin-top:20px;max-width:72ch}
 @media (max-width:860px){.prices{grid-template-columns:1fr}}
 
@@ -605,7 +607,7 @@ body::before{background:var(--sky-1)}
     <div class="prices">
       <div class="price">
         <h3>Jornada</h3><p class="size">Hasta 100 asistentes</p>
-        <div class="amount num"><small class="from">desde</small> 290 € <small>+ IVA</small></div>
+        <div class="amount num"><small class="from">desde</small> 490 € <small>+ IVA</small></div>
         <ul>
           <li>Todos los módulos y los cuatro portales</li>
           <li>Puesta en marcha con vuestra configuración</li>
@@ -616,7 +618,7 @@ body::before{background:var(--sky-1)}
       </div>
       <div class="price featured">
         <h3>Congreso</h3><p class="size">Hasta 500 asistentes</p>
-        <div class="amount num"><small class="from">desde</small> 590 € <small>+ IVA</small></div>
+        <div class="amount num"><small class="from">desde</small> 1.490 € <small>+ IVA</small></div>
         <ul>
           <li>Todo lo del plan Jornada</li>
           <li>Formación para todo el equipo organizador</li>
@@ -627,7 +629,7 @@ body::before{background:var(--sky-1)}
       </div>
       <div class="price">
         <h3>Congreso grande</h3><p class="size">Hasta 1.000 asistentes</p>
-        <div class="amount num"><small class="from">desde</small> 990 € <small>+ IVA</small></div>
+        <div class="amount num"><small class="from">desde</small> 2.900 € <small>+ IVA</small></div>
         <ul>
           <li>Todo lo del plan Congreso</li>
           <li>Formación por perfiles: secretaría, comité y mostrador</li>
@@ -637,7 +639,8 @@ body::before{background:var(--sky-1)}
         <button class="btn blue" type="button" data-plan="Congreso grande">Pedir presupuesto</button>
       </div>
     </div>
-    <p class="price-notes">Precios de lanzamiento por evento. Más de 1.000 asistentes, varios eventos al año, soporte presencial o adaptaciones: pide presupuesto. Las comisiones de las pasarelas de pago no están incluidas.</p>
+    <p class="launch"><b>Precio de lanzamiento:</b> −40 % para los tres primeros colegios o sociedades que lo contraten.</p>
+    <p class="price-notes">Precios por evento. Más de 1.000 asistentes, varios eventos al año, soporte presencial o adaptaciones: pide presupuesto. Las comisiones de las pasarelas de pago no están incluidas.</p>
   </div>
 </section>
 
@@ -795,7 +798,7 @@ body::before{background:var(--sky-1)}
   const MONTHS = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
   const mo = $("mo"), sz = $("sz"), now = new Date();
   for (let i = 1; i <= 30; i++) { const d = new Date(now.getFullYear(), now.getMonth() + i, 1); mo.add(new Option(MONTHS[d.getMonth()].replace(/^./, (c) => c.toUpperCase()) + " de " + d.getFullYear(), d.getFullYear() + "-" + d.getMonth())); }
-  const PLANS = { "100": ["Jornada", "290"], "500": ["Congreso", "590"], "1000": ["Congreso grande", "990"], "1001": ["A medida", null] };
+  const PLANS = { "100": ["Jornada", "490"], "500": ["Congreso", "1.490"], "1000": ["Congreso grande", "2.900"], "1001": ["A medida", null] };
   const tip = $("tip");
   [sz, mo].forEach((s) => s.addEventListener("change", () => tip.classList.add("gone")));
   setTimeout(() => tip.classList.add("gone"), 6000);
