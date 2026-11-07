@@ -267,6 +267,13 @@ section.block .intro{color:var(--ink-2);max-width:60ch;margin:18px 0 0;font-size
 .price .btn{margin-top:28px}
 .price.featured{background:linear-gradient(170deg,#0B6FF2,#0857C2);color:#fff;border-color:transparent;box-shadow:0 24px 60px rgba(11,111,242,.25)}
 .price.featured .size,.price.featured .amount small{color:rgba(255,255,255,.85)}
+.billing{display:inline-flex;gap:4px;margin-top:32px;padding:4px;border-radius:999px;background:var(--bg-2);border:1px solid var(--line)}
+.billing button{height:36px;padding:0 16px;border:0;border-radius:999px;background:none;font:500 14px/1 var(--font);color:var(--ink-2);cursor:pointer}
+.billing button span{font-size:12px;color:var(--green);margin-left:4px}
+.billing button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:var(--shadow)}
+.price .extra{font-size:14px;color:var(--ink-2);margin:10px 0 0}
+.price.featured .extra{color:rgba(255,255,255,.85)}
+.prices{margin-top:24px}
 .price-notes{font-size:15px;color:var(--ink-2);margin-top:20px;max-width:72ch}
 @media (max-width:860px){.prices{grid-template-columns:1fr}}
 
@@ -409,7 +416,7 @@ body::before{background:var(--sky-1)}
       <div class="rprice" id="rPrice"></div>
       <p id="rText"></p>
     </div>
-    <span class="chip-loc">Precios por congreso · sin cuota anual</span>
+    <span class="chip-loc">Desde 99 €/mes · plataforma abierta todo el año</span>
     <p class="alt">¿Prefieres verla antes? <a href="https://plenaria-demo-publica.lovable.app" target="_blank" rel="noopener">Pruébala con un congreso de ejemplo</a></p>
   </div>
 </header>
@@ -603,12 +610,17 @@ body::before{background:var(--sky-1)}
 
 <section class="block" id="precios">
   <div class="wrap">
-    <h2>Se paga por congreso, sin cuota anual</h2>
-    <p class="intro">Todos los planes incluyen todos los módulos. Cambian el tamaño del congreso, la formación y el soporte. El precio final depende de lo que necesitéis configurar.</p>
+    <h2>Una cuota sencilla, con la plataforma abierta todo el año</h2>
+    <p class="intro">Un congreso no dura tres días: las inscripciones abren meses antes y los diplomas llegan después. Pagas un alta la primera vez y una cuota que cubre la plataforma, el soporte y la siguiente edición ya preparada.</p>
+    <div class="billing" role="group" aria-label="Forma de pago">
+      <button type="button" id="bMonth" aria-pressed="true">Mensual</button>
+      <button type="button" id="bYear" aria-pressed="false">Anual <span>2 meses gratis</span></button>
+    </div>
     <div class="prices">
       <div class="price">
-        <h3>Jornada</h3><p class="size">Hasta 100 asistentes</p>
-        <div class="amount num"><small class="from">desde</small> 690 € <small>+ IVA</small></div>
+        <h3>Jornada</h3><p class="size">Hasta 100 asistentes · un solo evento</p>
+        <div class="amount num">690 € <small>por evento + IVA</small></div>
+        <p class="extra">Sin cuota ni permanencia</p>
         <ul>
           <li>Todos los módulos y los cuatro portales</li>
           <li>Puesta en marcha con vuestra configuración</li>
@@ -619,18 +631,21 @@ body::before{background:var(--sky-1)}
       </div>
       <div class="price featured">
         <h3>Congreso</h3><p class="size">Hasta 500 asistentes</p>
-        <div class="amount num"><small class="from">desde</small> 1.890 € <small>+ IVA</small></div>
+        <div class="amount num"><span class="pm">99 € <small>/mes + IVA</small></span><span class="py" hidden>990 € <small>/año + IVA</small></span></div>
+        <p class="extra">Alta 890 € la primera vez · permanencia 12 meses</p>
         <ul>
-          <li>Todo lo del plan Jornada</li>
+          <li>Plataforma abierta los 12 meses</li>
           <li>Formación para todo el equipo organizador</li>
           <li>Revisión conjunta antes de abrir inscripciones</li>
           <li>Soporte por teléfono los días del congreso</li>
+          <li>La siguiente edición, ya duplicada</li>
         </ul>
         <button class="btn white" type="button" data-plan="Congreso">Pedir presupuesto</button>
       </div>
       <div class="price">
         <h3>Congreso grande</h3><p class="size">Hasta 1.000 asistentes</p>
-        <div class="amount num"><small class="from">desde</small> 3.490 € <small>+ IVA</small></div>
+        <div class="amount num"><span class="pm">199 € <small>/mes + IVA</small></span><span class="py" hidden>1.990 € <small>/año + IVA</small></span></div>
+        <p class="extra">Alta 1.490 € la primera vez · permanencia 12 meses</p>
         <ul>
           <li>Todo lo del plan Congreso</li>
           <li>Formación por perfiles: secretaría, comité y mostrador</li>
@@ -640,7 +655,7 @@ body::before{background:var(--sky-1)}
         <button class="btn blue" type="button" data-plan="Congreso grande">Pedir presupuesto</button>
       </div>
     </div>
-    <p class="price-notes">Precios de lanzamiento por evento. Más de 1.000 asistentes, varios eventos al año, soporte presencial o adaptaciones: pide presupuesto. Las comisiones de las pasarelas de pago no están incluidas.</p>
+    <p class="price-notes">Pago anual por transferencia o mensual por domiciliación bancaria. ¿Preferís pagar solo por congreso? También es posible: desde 1.890 € por edición (Congreso) o 3.490 € (Congreso grande). Más de 1.000 asistentes o varios eventos al año: pide presupuesto. Las comisiones de las pasarelas de pago no están incluidas.</p>
   </div>
 </section>
 
@@ -798,7 +813,7 @@ body::before{background:var(--sky-1)}
   const MONTHS = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
   const mo = $("mo"), sz = $("sz"), now = new Date();
   for (let i = 1; i <= 30; i++) { const d = new Date(now.getFullYear(), now.getMonth() + i, 1); mo.add(new Option(MONTHS[d.getMonth()].replace(/^./, (c) => c.toUpperCase()) + " de " + d.getFullYear(), d.getFullYear() + "-" + d.getMonth())); }
-  const PLANS = { "100": ["Jornada", "690"], "500": ["Congreso", "1.890"], "1000": ["Congreso grande", "3.490"], "1001": ["A medida", null] };
+  const PLANS = { "100": ["Jornada", "690 € <small>por evento + IVA</small>"], "500": ["Congreso", "99 € <small>/mes + alta 890 €</small>"], "1000": ["Congreso grande", "199 € <small>/mes + alta 1.490 €</small>"], "1001": ["A medida", null] };
   const tip = $("tip");
   [sz, mo].forEach((s) => s.addEventListener("change", () => tip.classList.add("gone")));
   setTimeout(() => tip.classList.add("gone"), 6000);
@@ -810,7 +825,7 @@ body::before{background:var(--sky-1)}
     const ev = new Date(y, m, 15), open = new Date(ev.getTime() - 260 * 864e5);
     const label = MONTHS[open.getMonth()] + " de " + open.getFullYear();
     $("rPlan").textContent = "Plan " + name;
-    $("rPrice").innerHTML = price ? "desde " + price + " € <small>+ IVA</small>" : "Presupuesto <small>a medida</small>";
+    $("rPrice").innerHTML = price ? price : "Presupuesto <small>a medida</small>";
     $("rText").textContent = open > now
       ? "Para un congreso en " + MONTHS[m] + " de " + y + ", lo ideal es abrir inscripciones hacia " + label + ". Nosotros lo dejamos configurado antes."
       : "Para un congreso en " + MONTHS[m] + " de " + y + ", lo ideal habría sido abrir inscripciones en " + label + ". Ajustamos el cronograma al tiempo que queda.";
@@ -903,6 +918,10 @@ body::before{background:var(--sky-1)}
     document.getElementById("demo").scrollIntoView({ behavior: "smooth" });
     setTimeout(() => form.nombre.focus({ preventScroll: true }), 500);
   }));
+  // Mensual / anual
+  const bM = document.getElementById("bMonth"), bY = document.getElementById("bYear");
+  function bill(y) { bM.setAttribute("aria-pressed", String(!y)); bY.setAttribute("aria-pressed", String(y)); document.querySelectorAll(".pm").forEach((e) => e.hidden = y); document.querySelectorAll(".py").forEach((e) => e.hidden = !y); }
+  bM.addEventListener("click", () => bill(false)); bY.addEventListener("click", () => bill(true));
   const LIMITS = { nombre: 80, email: 254, organizacion: 120, mensaje: 1000 };
   // Quita caracteres de control e invisibles y espacios sobrantes
   const clean = (v, multiline) => {
