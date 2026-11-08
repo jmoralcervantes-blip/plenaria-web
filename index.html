@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; img-src 'self' data:; form-action 'self' mailto:; connect-src 'self' https://api.web3forms.com https://cloudflareinsights.com; base-uri 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; img-src 'self' data:; form-action 'self' mailto:; connect-src 'self' https://api.web3forms.com https://*.make.com https://cloudflareinsights.com; base-uri 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="canonical" href="https://plenaria.es/">
 <title>Plenaria · Gestión de congresos profesionales</title>
@@ -905,6 +905,8 @@ body::before{background:var(--sky-1)}
     fecha.add(new Option(label.charAt(0).toUpperCase() + label.slice(1), label));
   }
 
+  // URL del webhook de Make (escenario "Plenaria · Solicitud de demo"). Vacía = no se envía nada a Make.
+  const MAKE_WEBHOOK = "https://hook.eu1.make.com/c39onad25471bixautdomussrx9aml88";
   const form = document.getElementById("demo-form");
   const err = document.getElementById("form-error");
   const button = form.querySelector('button[type="submit"]');
@@ -971,6 +973,25 @@ body::before{background:var(--sky-1)}
       plan: d.plan,
       mensaje: d.mensaje || "(sin mensaje)",
     };
+    // Copia a Make (hoja de leads, Brevo y aviso por Telegram). Va aparte y sin esperar respuesta:
+    // si Make falla, la solicitud sigue llegando por Web3Forms. Formato de formulario para evitar el preflight CORS.
+    if (MAKE_WEBHOOK && !payload.botcheck) {
+      fetch(MAKE_WEBHOOK, {
+        method: "POST",
+        mode: "no-cors",
+        keepalive: true,
+        body: new URLSearchParams({
+          nombre: d.nombre,
+          email: d.email,
+          organizacion: d.organizacion,
+          plan: d.plan,
+          fecha_evento: d.fecha,
+          asistentes: d.asistentes,
+          mensaje: d.mensaje || "",
+          origen: "plenaria.es",
+        }),
+      }).catch(() => {});
+    }
     try {
       const res = await fetch("https://api.web3forms.com/submit", { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(payload) });
       const out = await res.json().catch(() => ({}));
