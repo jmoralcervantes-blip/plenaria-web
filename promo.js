@@ -26,13 +26,34 @@
     '. <a href="#demo" style="color:#9CC8FF;font-weight:600;white-space:nowrap">Pedir demo →</a>';
   document.body.insertBefore(bar, document.body.firstChild);
 
-  // 2. Tarjetas de precios: «Alta 890 € la primera vez»
-  document.querySelectorAll("#precios .extra").forEach((p) => {
-    const m = p.textContent.match(/Alta ([\d.]+) €/);
+  // 2. Tarjetas de precios: distintivo encima del precio y alta rebajada bien visible
+  const css = document.createElement("style");
+  css.textContent =
+    ".promo-badge{display:inline-flex;align-self:flex-start;align-items:center;gap:6px;background:#0B1220;color:#fff;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:6px 12px;margin:0 0 14px}" +
+    ".price.featured .promo-badge{background:#fff;color:#0B1220}" +
+    ".promo-alta{margin:16px 0 0;padding:14px 16px;border-radius:14px;background:#EEF4FF;border:1.5px dashed rgba(11,111,242,.45)}" +
+    ".price.featured .promo-alta{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.55)}" +
+    ".promo-alta .row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}" +
+    ".promo-alta .lbl{font-size:14px;font-weight:600}" +
+    ".promo-alta s{font-size:18px;opacity:.55}" +
+    ".promo-alta b{font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1}" +
+    ".promo-alta p{margin:6px 0 0;font-size:13px;opacity:.85}";
+  document.head.appendChild(css);
+  document.querySelectorAll("#precios .price").forEach((card) => {
+    const p = card.querySelector(".extra");
+    const m = p && p.textContent.match(/Alta ([\d.]+) €(.*)/);
     if (!m) return;
     const full = num(m[1]);
-    p.innerHTML = p.innerHTML.replace(m[0], 'Alta <s style="opacity:.6">' + eur(full) + "</s> <b>" + eur(off(full)) + "</b>") +
-      '<br><span style="font-weight:600">−' + PCT + " % " + LABEL + ", " + UNTIL + "</span>";
+    const badge = document.createElement("span");
+    badge.className = "promo-badge";
+    badge.textContent = LABEL + " · −" + PCT + " % en el alta";
+    const amount = card.querySelector(".amount");
+    if (amount) amount.parentNode.insertBefore(badge, amount);
+    const box = document.createElement("div");
+    box.className = "promo-alta";
+    box.innerHTML = '<div class="row"><span class="lbl">Alta</span><s>' + eur(full) + "</s><b>" + eur(off(full)) + "</b></div>" +
+      "<p>" + m[2].trim().replace(/^la primera vez/, "La primera vez") + "<br>Oferta " + UNTIL + "</p>";
+    p.replaceWith(box);
   });
 
   // 3. Buscador de plan de la cabecera («+ alta 890 €»)
