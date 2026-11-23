@@ -2,7 +2,7 @@
  * Promociones temporales de plenaria.es.
  * Solo actúan entre START y END (hora de Madrid). Fuera de esas fechas no hacen nada,
  * así que no hace falta quitar nada a mano cuando terminan.
- * Black Friday 2026: −30 % en el alta, del lunes 23 al domingo 29 de noviembre.
+ * Black Friday 2026: −30 % en el alta y −20 % en la Jornada, del lunes 23 al domingo 29 de noviembre.
  */
 (function () {
   const START = Date.parse("2026-11-23T00:00:00+01:00");
@@ -11,18 +11,20 @@
   const test = /[?&]promo=1\b/.test(location.search); // para revisar el aspecto fuera de fechas
   if (!test && (now < START || now >= END)) return;
 
-  const PCT = 30;
+  const PCT = 30; // alta de Congreso y Congreso grande
+  const PCT_J = 20; // Jornada
   const LABEL = "Black Friday";
   const UNTIL = "hasta el domingo 29 de noviembre";
   const eur = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " €";
   const off = (n) => Math.round(n * (1 - PCT / 100));
+  const offJ = (n) => Math.round(n * (1 - PCT_J / 100));
   const num = (s) => Number(s.replace(/\./g, ""));
 
   // 1. Barra superior
   const bar = document.createElement("div");
   bar.setAttribute("role", "note");
   bar.style.cssText = "background:#0B1220;color:#fff;font-size:14px;font-weight:500;line-height:1.4;text-align:center;padding:10px 16px";
-  bar.innerHTML = "<b>" + LABEL + "</b> · −" + PCT + " % en el alta para quien pida su demo " + UNTIL +
+  bar.innerHTML = "<b>" + LABEL + "</b> · −" + PCT + " % en el alta y −" + PCT_J + " % en la Jornada para quien pida su demo " + UNTIL +
     '. <a href="#demo" style="color:#9CC8FF;font-weight:600;white-space:nowrap">Pedir demo →</a>';
   document.body.insertBefore(bar, document.body.firstChild);
 
@@ -37,17 +39,36 @@
     ".promo-alta .lbl{font-size:14px;font-weight:600}" +
     ".promo-alta s{font-size:18px;opacity:.55}" +
     ".promo-alta b{font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1}" +
-    ".promo-alta p{margin:6px 0 0;font-size:13px;opacity:.85}";
+    ".promo-alta p{margin:6px 0 0;font-size:13px;opacity:.85}" +
+    ".amount.promo-j small{display:block;margin-top:8px}" +
+    ".promo-old{font-size:24px;font-weight:500;opacity:.45;text-decoration:line-through;margin-right:8px;letter-spacing:-.02em}";
   document.head.appendChild(css);
   document.querySelectorAll("#precios .price").forEach((card) => {
     const p = card.querySelector(".extra");
     const m = p && p.textContent.match(/Alta ([\d.]+) €(.*)/);
-    if (!m) return;
+    const amount = card.querySelector(".amount");
+    if (!m) {
+      // Jornada: precio por evento rebajado
+      const first = amount && amount.firstChild;
+      const pm = first && first.nodeType === 3 && first.textContent.match(/([\d.]+) €/);
+      if (!pm) return;
+      const badge = document.createElement("span");
+      badge.className = "promo-badge";
+      badge.textContent = LABEL + " · −" + PCT_J + " %";
+      amount.parentNode.insertBefore(badge, amount);
+      const old = document.createElement("span");
+      old.className = "promo-old";
+      old.textContent = eur(num(pm[1]));
+      first.textContent = first.textContent.replace(pm[0], eur(offJ(num(pm[1]))));
+      amount.insertBefore(old, first);
+      amount.classList.add("promo-j");
+      if (p) p.innerHTML += '<br><b>Oferta ' + UNTIL + "</b>";
+      return;
+    }
     const full = num(m[1]);
     const badge = document.createElement("span");
     badge.className = "promo-badge";
     badge.textContent = LABEL + " · −" + PCT + " % en el alta";
-    const amount = card.querySelector(".amount");
     if (amount) amount.parentNode.insertBefore(badge, amount);
     const box = document.createElement("div");
     box.className = "promo-alta";
@@ -61,7 +82,9 @@
   if (r) {
     const fix = () => {
       if (r.dataset.promo === r.innerHTML) return;
-      const html = r.innerHTML.replace(/alta ([\d.]+) €/, (_, a) => 'alta <s style="opacity:.6">' + eur(num(a)) + "</s> " + eur(off(num(a))));
+      const html = r.innerHTML
+        .replace(/alta ([\d.]+) €/, (_, a) => 'alta <s style="opacity:.6">' + eur(num(a)) + "</s> " + eur(off(num(a))))
+        .replace(/^([\d.]+) € (<small>por evento)/, (_, a, rest) => '<s style="opacity:.45;font-size:.6em">' + eur(num(a)) + "</s> " + eur(offJ(num(a))) + " " + rest);
       r.innerHTML = html;
       r.dataset.promo = r.innerHTML;
     };
